@@ -41,7 +41,7 @@ module data_memory( input        clk,
         the correct level. Regardless, the data output will output the byte located in the memory
         at the address being input.
     */
-    reg[7:0]mem[256]
+    reg[7:0]mem[256];
     always @(posedge clk ) begin
         if(write)
             mem[address] <= dataIn;
