@@ -20,24 +20,24 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module program_memory( input  [7:0]  address, 
-                       output [16:0] instruction );
+module program_memory( input      [7:0]  address, 
+                       output reg [16:0] instruction );
     /*
         The program memory will contain an 256x17 bit memory. It will use the program counter
         as the address and output the corresponding 17-bit instruction from the memory.
     */
-    reg[16:0]mem[256];
+    reg[16:0]mem[255:0];
     always @(address) begin
         instruction <= mem[address];
     end
     
 endmodule
 
-module data_memory( input        clk,
-                    input  [7:0] address, 
-                    input        write,
-                    input  [7:0] dataIn, 
-                    output [7:0] dataOut );
+module data_memory( input            clk,
+                    input      [7:0] address, 
+                    input            write,
+                    input      [7:0] dataIn, 
+                    output reg [7:0] dataOut );
     /*
         The data memory will be a 256 byte memory. The address input will be used to determine
         the address being written to or read from. At the edge of the clock, the value of the data
@@ -45,10 +45,11 @@ module data_memory( input        clk,
         the correct level. Regardless, the data output will output the byte located in the memory
         at the address being input.
     */
-    reg[7:0]mem[256];
+    reg[7:0]mem[255:0];
     always @(posedge clk ) begin
         if(write)
             mem[address] <= dataIn;
         dataOut <= mem[address];
     end
-endmodule
+endmodule 
+
