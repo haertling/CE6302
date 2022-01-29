@@ -26,6 +26,10 @@ module program_memory( input  [7:0]  address,
         The program memory will contain an 256x17 bit memory. It will use the program counter
         as the address and output the corresponding 17-bit instruction from the memory.
     */
+    reg[16:0]mem[256];
+    always @(address) begin
+        instruction <= mem[address];
+    end
     
 endmodule
 
