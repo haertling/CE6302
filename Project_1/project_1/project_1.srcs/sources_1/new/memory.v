@@ -27,6 +27,12 @@ module program_memory( input      [7:0]  address,
         as the address and output the corresponding 17-bit instruction from the memory.
     */
     reg[16:0]mem[255:0];
+    reg [2:0] k;
+    initial begin
+        for (k = 0; k < 4; k = k + 1) begin
+            mem[k] = 3 - k;
+        end
+    end
     always @(address) begin
         instruction <= mem[address];
     end
@@ -48,8 +54,9 @@ module data_memory( input            clk,
     reg[7:0]mem[255:0];
     always @(posedge clk ) begin
         if(write)
-            mem[address] <= dataIn;
-        dataOut <= mem[address];
+            mem[address] = dataIn;
+ 
+        dataOut = mem[address];
     end
 endmodule 
 

@@ -37,16 +37,19 @@ module tb_memory(
     initial
     begin
         clk = 0;
+        write = 1;
+        #6
         dataIn = 33;
         dm_address = 0;
-        write = 1;
         pm_address = 01;
-        #10;
-        write = 0;
-        dataIn = 22;
+        #10;      
         pm_address = 02;
-        #10;
+        #5;
+        write = 0;
+        dm_address = 0;
+        dataIn = 22;
         pm_address = 03; 
+        #10;
         #10;
         $finish;       
     end
