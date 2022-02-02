@@ -34,7 +34,7 @@ module program_memory( input      [7:0]  address,
         end
     end
     always @(address) begin
-        instruction <= mem[address];
+        instruction = mem[address];
     end
     
 endmodule
