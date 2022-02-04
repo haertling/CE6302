@@ -1,24 +1,4 @@
 `timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 02/01/2022 07:50:36 PM
-// Design Name: 
-// Module Name: register_file
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
-
 
 module register_file( input            clk,
                       input      [2:0] a_address,
@@ -38,5 +18,22 @@ module register_file( input            clk,
     Enable input, then when the clock pulses the value from Data In will be stored in the register
     associated with the D Address value (with the exception of the zero register). For example,
     if the D Address input is '010', then the value of Data In will be stored in register 2.*/
+    reg[7:0] registers[7:0];
+    reg[7:0] k = 0;
+    initial begin
+        registers[0] = k;
+    end
+    
+    always @* begin
+        a_data = registers[a_address];
+        b_data = registers[b_address];
+    end
+    
+    always @(posedge clk ) begin
+        if(write)begin
+            if(d_address!= 0)
+                registers[d_address] = dataIn;
+        end
+    end
     
 endmodule

@@ -26,3 +26,10 @@ Project_1/project_1/project_1.sim/sim_1/behav/xsim/xsim.dir/tb_memory_behav/Temp
 Project_1/project_1/project_1.sim/sim_1/behav/xsim/glbl.v
 Project_1/project_1/project_1.ip_user_files/README.txt
 Project_1/project_1/project_1.sim/sim_1/behav/xsim/xsim.dir/tb_memory_behav/obj/xsim_1.c
+Project_1/project_1/project_1.sim/sim_1/behav/xsim/xsim.dir/tb_register_file_behav/obj/xsim_1.c
+.gitignore
+Project_1/project_1/project_1.sim/sim_1/behav/xsim/xsim.dir/tb_register_file_behav/TempBreakPointFile.txt
+Project_1/project_1/project_1.sim/sim_1/behav/xsim/xsim.dir/tb_register_file_behav/Compile_Options.txt
+Project_1/project_1/project_1.sim/sim_1/behav/xsim/xsim.dir/register_file_behav/obj/xsim_1.c
+Project_1/project_1/project_1.sim/sim_1/behav/xsim/xsim.dir/register_file_behav/TempBreakPointFile.txt
+Project_1/project_1/project_1.sim/sim_1/behav/xsim/xsim.dir/register_file_behav/Compile_Options.txt
