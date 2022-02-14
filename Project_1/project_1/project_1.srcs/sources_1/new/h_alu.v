@@ -18,17 +18,20 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module h_alu( input [7:0] X,Y,  // ALU 8-bit Inputs                 
+module h_alu( input [7:0] X,Y,    // ALU 8-bit Inputs                 
               input [3:0] ALU_Sel,// ALU Selection
-              output [7:0] Z, // ALU 8-bit Output
-              output C // Carry Out Flag
+              output [7:0] Z,     // ALU 8-bit Output
+              output c_flag,      // Carry Out Flag
+              output zero_flag,   // zero flag
+              output neg_flag,    // negative flag
+              output over_flag    // overflow flag
             );
 
   reg [7:0] ALU_Result;
   wire [8:0] tmp;
   assign Z = ALU_Result; // ALU out
   assign tmp = {1'b0,X} + {1'b0,Y};
-  assign C = tmp[8]; // Carryout flag
+  assign c_flag = tmp[8]; // Carryout flag
   always @(*)
     begin
       case(ALU_Sel)
