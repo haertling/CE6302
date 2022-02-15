@@ -26,26 +26,33 @@ module tb_alu;
 //Inputs
   reg[7:0] X,Y;
   reg[3:0] ALU_Sel;
+  reg[2:0] SH;
 
 //Outputs
   wire[7:0] Z;
-  wire C;
+  wire carry,zero,neg,over;
+  
   // Verilog code for ALU
   integer i;
   h_alu test_unit( X,Y,  // ALU 8-bit Inputs                 
                    ALU_Sel,// ALU Selection
+                   SH,
                    Z, // ALU 8-bit Output
-                   C // Carry Out Flag
+                   carry,
+                   zero,
+                   neg,
+                   over // Carry Out Flag
                   );
     initial begin
     // hold reset state for 100 ns.
       X = 8'h0A;
-      Y = 4'h02;
+      Y = 4'h0B;
       ALU_Sel = 4'h0;
+      SH = 2;
       
       for (i=0;i<=15;i=i+1)
       begin
-        ALU_Sel = ALU_Sel + 8'h01;
+        ALU_Sel = i;
         #10;
       end;
       

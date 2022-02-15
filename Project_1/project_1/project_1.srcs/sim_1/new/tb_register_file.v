@@ -41,7 +41,7 @@ module tb_register_file(
         a_address = 0;
         b_address = 0;
         d_address = 0;
-        dataIn = 0;
+        dataIn = 55;
         #10;
         d_address = 1;
         dataIn = 255;

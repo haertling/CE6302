@@ -20,7 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 module h_alu( input      [7:0] X,Y,    // ALU 8-bit Inputs                 
               input      [3:0] ALU_Sel,// ALU Selection
-              output reg [7:0] Z,     // ALU 8-bit Output
+              input      [2:0] SH,     // shift amount
+              output     [7:0] Z,     // ALU 8-bit Output
               output           c_flag,      // Carry Out Flag
               output           zero_flag,   // zero flag
               output           neg_flag,    // negative flag
@@ -28,10 +29,11 @@ module h_alu( input      [7:0] X,Y,    // ALU 8-bit Inputs
             );
 
   reg [7:0] ALU_Result;
-  wire [8:0] tmp;
   assign Z = ALU_Result; // ALU out
-  assign tmp = {1'b0,X} + {1'b0,Y};
-  assign c_flag = tmp[8]; // Carryout flag
+  assign c_flag = 0; // Carryout flag
+  assign zero_flag = ~(|ALU_Result);
+  assign neg_flag = (ALU_Result[7] == 1 && ALU_Sel == 4'b0001);
+  assign over_flag= 0;
   always @(*)
     begin
       case(ALU_Sel)
@@ -44,9 +46,9 @@ module h_alu( input      [7:0] X,Y,    // ALU 8-bit Inputs
         4'b0011: // Division
           ALU_Result = X/Y;
         4'b0100: // Logical shift left
-          ALU_Result = X<<1;
+          ALU_Result = X<<SH;
         4'b0101: // Logical shift right
-          ALU_Result = X>>1;
+          ALU_Result = X>>SH;
         4'b0110: // Rotate left
           ALU_Result = {X[6:0],X[7]};
         4'b0111: // Rotate right
