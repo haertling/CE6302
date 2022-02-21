@@ -21,22 +21,22 @@
 
 
 module instruction_decoder( input [16:0] instruction,
-                            output           rw,
+                            output reg       rw,
                             output reg [2:0] da,
                             output reg [1:0] md,
                             output reg [1:0] bs,
                             output reg [1:0] ps,
-                            output           mw,
+                            output reg       mw,
                             output reg [3:0] fs,
-                            output           ma,
-                            output           mb,
+                            output reg       ma,
+                            output reg       mb,
                             output reg [2:0] aa,
                             output reg [2:0] ba,
-                            output           cs );
+                            output reg       cs );
 
     always @(*)
     begin
-        case(instr[16:12])
+        case(instruction[16:12])
         5'b00000: begin //nop
             rw = 0;
             ps = 2'b0;
@@ -60,8 +60,8 @@ module instruction_decoder( input [16:0] instruction,
             cs = 1;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
+            da = instruction[11:9];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b1010;
         end
@@ -75,7 +75,7 @@ module instruction_decoder( input [16:0] instruction,
             md = 2'b0;
             bs = 2'b01;
             da = 3'b0;
-            aa = instr[8:6];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b1010;
         end
@@ -89,7 +89,7 @@ module instruction_decoder( input [16:0] instruction,
             md = 2'b0;
             bs = 2'b10;
             da = 3'b0;
-            aa = instr[8:6];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b0000;
         end
@@ -102,9 +102,9 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
-            ba = instr[5:3];
+            da = instruction[11:9];
+            aa = instruction[8:6];
+            ba = instruction[5:3];
             fs = 4'b0001;
         end
         5'b00101: begin //and
@@ -116,9 +116,9 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
-            ba = instr[5:3];
+            da = instruction[11:9];
+            aa = instruction[8:6];
+            ba = instruction[5:3];
             fs = 4'b0011;
         end
         5'b00110: begin //in
@@ -130,8 +130,8 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b01;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
+            da = instruction[11:9];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b0000;
         end
@@ -144,8 +144,8 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b01;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
+            da = instruction[11:9];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b0000;
             
@@ -159,9 +159,9 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
-            ba = instr[5:3];
+            da = instruction[11:9];
+            aa = instruction[8:6];
+            ba = instruction[5:3];
             fs = 4'b0010;
         end
         5'b01001: begin //not
@@ -173,8 +173,8 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
+            da = instruction[11:9];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b0101;            
         end
@@ -187,7 +187,7 @@ module instruction_decoder( input [16:0] instruction,
             cs = 1;
             md = 2'b0;
             bs = 2'b11;
-            da = instr[11:9];
+            da = instruction[11:9];
             aa = 3'b0;
             ba = 3'b0;
             fs = 4'b1010;            
@@ -201,8 +201,8 @@ module instruction_decoder( input [16:0] instruction,
             cs = 1;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
+            da = instruction[11:9];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b1010;
         end
@@ -215,8 +215,8 @@ module instruction_decoder( input [16:0] instruction,
             cs = 1;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
+            da = instruction[11:9];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b1001;            
         end
@@ -229,9 +229,9 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b0;
             bs = 2'b00;
-            da = instr[11:9];
-            aa = instr[8:6];
-            ba = instr[5:3];
+            da = instruction[11:9];
+            aa = instruction[8:6];
+            ba = instruction[5:3];
             fs = 4'b0000;            
         end
         5'b01110: begin //out
@@ -244,8 +244,8 @@ module instruction_decoder( input [16:0] instruction,
             md = 2'b0;
             bs = 2'b0;
             da = 3'b0;
-            aa = instr[8:6];
-            ba = instr[5:3];
+            aa = instruction[8:6];
+            ba = instruction[5:3];
             fs = 4'b0000;
         end
         5'b01111: begin //slt
@@ -257,9 +257,9 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
-            ba = instr[5:3];
+            da = instruction[11:9];
+            aa = instruction[8:6];
+            ba = instruction[5:3];
             fs = 4'b1000;            
         end
         5'b10000: begin //mov
@@ -271,8 +271,8 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
+            da = instruction[11:9];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b1010;            
         end
@@ -285,8 +285,8 @@ module instruction_decoder( input [16:0] instruction,
             cs = 1;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
+            da = instruction[11:9];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b0001;            
         end
@@ -300,7 +300,7 @@ module instruction_decoder( input [16:0] instruction,
             md = 2'b0;
             bs = 2'b11;
             da = 3'b0;
-            aa = instr[8:6];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b1010;            
         end
@@ -313,8 +313,8 @@ module instruction_decoder( input [16:0] instruction,
             cs = 0;
             md = 2'b0;
             bs = 2'b0;
-            da = instr[11:9];
-            aa = instr[8:6];
+            da = instruction[11:9];
+            aa = instruction[8:6];
             ba = 3'b0;
             fs = 4'b0110;            
         end
@@ -332,6 +332,6 @@ module instruction_decoder( input [16:0] instruction,
             ba = 3'b0;
             fs = 4'b0000;            
         end
-
-
+        endcase
+    end
 endmodule
