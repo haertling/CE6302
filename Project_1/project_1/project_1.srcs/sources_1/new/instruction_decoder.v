@@ -3,7 +3,7 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 02/14/2022 04:25:23 PM
+// Create date: 02/14/2022 04:25:23 PM
 // Design Name: 
 // Module Name: instruction_decoder
 // Project Name: 
@@ -38,59 +38,275 @@ module instruction_decoder( input [16:0] instruction,
     begin
         case(instr[16:12])
         5'b00000: begin //nop
-            RW = 0;
-            PS = 2'b0;
-            MW = 0;
-            MA = 0;
-            MB = 0;
-            CS = 0;
-            MD = 2'b0;
-            BS = 2'b0;
-            DA = 3'b0;
-            AA = 3'b0;
-            BA = 3'b0;
-            FS = 4'b0;
-            IO = 0;
+            rw = 0;
+            ps = 2'b0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b0;
+            da = 3'b0;
+            aa = 3'b0;
+            ba = 3'b0;
+            fs = 4'b0;
         end
         5'b00001: begin //xri
         end
         5'b00010: begin //BZ
+            RW = 0;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 1;
+            cs = 1;
+            md = 2'b0;
+            bs = 2'b01;
+            da = 3'b0;
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b1010;
         end
         5'b00011: begin //jmr
+            RW = 0;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b10;
+            da = 3'b0;
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b0000;
         end
         5'b00100: begin //add
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = instr[5:3];
+            fs = 4'b0001;
         end
         5'b00101: begin //and
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = instr[5:3];
+            fs = 4'b0011;
         end
         5'b00110: begin //in
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b01;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b0000;
         end
         5'b00111: begin //ld
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b01;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b0000;
+            
         end
         5'b01000: begin //sub
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = instr[5:3];
+            fs = 4'b0010;
         end
         5'b01001: begin //not
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b0101;            
         end
         5'b01010: begin //jml
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 1;
+            mb = 1;
+            cs = 1;
+            md = 2'b0;
+            bs = 2'b11;
+            da = instr[11:9];
+            aa = 3'b0;
+            ba = 3'b0;
+            fs = 4'b1010;            
         end
         5'b01011: begin //aiu
         end
         5'b01100: begin //ori
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 1;
+            cs = 1;
+            md = 2'b0;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b1001;            
         end
         5'b01101: begin //st
+            RW = 0;
+            ps = 0;
+            mw = 1;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b00;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = instr[5:3];
+            fs = 4'b0000;            
         end
         5'b01110: begin //out
+            RW = 0;
+            ps = 0;
+            mw = 1;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b0;
+            da = 3'b0;
+            aa = instr[8:6];
+            ba = instr[5:3];
+            fs = 4'b0000;
         end
         5'b01111: begin //slt
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = instr[5:3];
+            fs = 4'b1000;            
         end
         5'b10000: begin //mov
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b1010;            
         end
         5'b10001: begin //adi
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 1;
+            cs = 1;
+            md = 2'b0;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b0001;            
         end
         5'b10010: begin //bnz
+            RW = 0;
+            ps = 1;
+            mw = 0;
+            ma = 0;
+            mb = 1;
+            cs = 1;
+            md = 2'b0;
+            bs = 2'b11;
+            da = 3'b0;
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b1010;            
         end
         5'b10011: begin //lsl
+            RW = 1;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 0;
+            cs = 0;
+            md = 2'b0;
+            bs = 2'b0;
+            da = instr[11:9];
+            aa = instr[8:6];
+            ba = 3'b0;
+            fs = 4'b0110;            
         end
         5'b10100: begin //jmp
+            RW = 0;
+            ps = 0;
+            mw = 0;
+            ma = 0;
+            mb = 1;
+            cs = 1;
+            md = 2'b0;
+            bs = 2'b11;
+            da = 3'b0;
+            aa = 3'b0;
+            ba = 3'b0;
+            fs = 4'b0000;            
         end
 
 
