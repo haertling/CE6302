@@ -52,7 +52,7 @@ module data_memory( input            clk,
         at the address being input.
     */
     reg[7:0]mem[255:0];
-    always @(posedge clk ) begin
+    always @(negedge clk ) begin
         if(write)
             mem[address] = dataIn;
  
