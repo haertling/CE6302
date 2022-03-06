@@ -16,18 +16,20 @@
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
-// 
+// https://electronics.stackexchange.com/questions/187513/efficient-way-of-setting-bits-in-verilog interesting link about assign in wire and always block for reg
 //////////////////////////////////////////////////////////////////////////////////
 
 
 module constant_unit( input      [5:0] IM,
                       input            cs,
                       output reg [5:0] constant );
-    if (cs = 0) begin
-        constant = 5'b00000;
-    end else begin
-        constant = IM;
-    end 
+    always @* begin
+        if (cs = 0) begin
+            constant = 5'b00000;
+        end else begin
+            constant = IM;
+        end
+    end
                    
 endmodule
 
@@ -49,21 +51,21 @@ module and2(          input  a,
     assign c=(a&b);
 endmodule
 
-module branch_addr( input  PC,
-                    input  BUSB,
-                    output BrA)
+module branch_addr( input  [7:0] PC,
+                    input  [7:0] BUSB,
+                    output [7:0] BrA)
     assign BrA = PC + BUSB;
 endmodule 
 
-module branch_inc(  input  PC,
-                    output PC_1)
+module branch_inc(  input  [7:0] PC,
+                    output [7:0] PC_1)
     assign PC_1 = PC + 1;
 endmodule
 
-module muxA(  input  PC_1,
-              input  A_data,
+module muxA(  input  [7:0] PC_1,
+              input  [7:0] A_data,
               input  MA,
-              output BUSA)
+              output [7:0] BUSA)
     if (MA = 0) begin
         assign BUSA = A_data;
     end else begin
@@ -71,10 +73,10 @@ module muxA(  input  PC_1,
     end
 endmodule
 
-module muxB(  input  constant,
-              input  B_data,
-              input  MB,
-              output BUSB)
+module muxB(  input  [5:0] constant,
+              input  [7:0] B_data,
+              input        MB,
+              output [7:0] BUSB)
     if (MB = 0) begin
         assign BUSB = B_data;
     end else begin
@@ -82,11 +84,11 @@ module muxB(  input  constant,
     end
 endmodule
 
-module muxC(  input  PC_1,
-              input  BrA,
-              input  RAA,
-              input  MC,
-              output PC)
+module muxC(  input  [7:0] PC_1,
+              input  [7:0] BrA,
+              input  [7:0] RAA,
+              input  [1:0] MC,
+              output [7:0] PC)
     if (MC = 0) begin
         assign PC = PC_1;
     end else if(MC = 2) begin
@@ -96,10 +98,10 @@ module muxC(  input  PC_1,
     end
 endmodule
 
-module muxD(  input  mod_fn_unit,
-              input  data_out,
-              input  MD,
-              output BUSD)
+module muxD(  input  [7:0] mod_fn_unit,
+              input  [7:0] data_out,
+              input  [1:0] MD,
+              output [7:0] BUSD)
     if (MD = 0) begin
         assign BUSD = mod_fn_unit;
     end else if(MD = 1) begin
