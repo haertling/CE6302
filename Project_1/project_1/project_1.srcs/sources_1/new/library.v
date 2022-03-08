@@ -22,10 +22,10 @@
 
 module constant_unit( input      [5:0] IM,
                       input            cs,
-                      output reg [5:0] constant );
+                      output reg [7:0] constant );
     always @* begin
-        if (cs = 0) begin
-            constant = 5'b00000;
+        if (cs == 0) begin
+            constant = 
         end else begin
             constant = IM;
         end
@@ -53,34 +53,42 @@ endmodule
 
 module branch_addr( input  [7:0] PC,
                     input  [7:0] BUSB,
-                    output [7:0] BrA)
-    assign BrA = PC + BUSB;
+                    output reg [7:0] BrA);
+    always @* begin
+        BrA = PC + BUSB;
+    end
 endmodule 
 
 module branch_inc(  input  [7:0] PC,
-                    output [7:0] PC_1)
-    assign PC_1 = PC + 1;
+                    output reg [7:0] PC_1);
+    always @* begin
+        PC_1 = PC + 1;
+    end
 endmodule
 
 module muxA(  input  [7:0] PC_1,
               input  [7:0] A_data,
               input  MA,
-              output [7:0] BUSA)
-    if (MA = 0) begin
-        assign BUSA = A_data;
-    end else begin
-        assign BUSA = PC_1;
+              output reg [7:0] BUSA);
+    always @* begin
+        if (MA == 0) begin
+            BUSA = A_data;
+        end else begin
+            BUSA = PC_1;
+        end
     end
 endmodule
 
 module muxB(  input  [5:0] constant,
               input  [7:0] B_data,
               input        MB,
-              output [7:0] BUSB)
-    if (MB = 0) begin
-        assign BUSB = B_data;
-    end else begin
-        assign BUSB = constant;
+              output reg [7:0] BUSB);
+    always @* begin
+        if (MB == 0) begin
+            BUSB = B_data;
+        end else begin
+            BUSB = constant;
+        end
     end
 endmodule
 
@@ -88,25 +96,29 @@ module muxC(  input  [7:0] PC_1,
               input  [7:0] BrA,
               input  [7:0] RAA,
               input  [1:0] MC,
-              output [7:0] PC)
-    if (MC = 0) begin
-        assign PC = PC_1;
-    end else if(MC = 2) begin
-        assign PC = RAA;
-    end else begin
-        assign PC = BrA;
+              output reg [7:0] PC);
+    always @* begin
+        if (MC == 0) begin
+            PC = PC_1;
+        end else if(MC == 2) begin
+            PC = RAA;
+        end else begin
+            PC = BrA;
+        end
     end
 endmodule
 
 module muxD(  input  [7:0] mod_fn_unit,
               input  [7:0] data_out,
               input  [1:0] MD,
-              output [7:0] BUSD)
-    if (MD = 0) begin
-        assign BUSD = mod_fn_unit;
-    end else if(MD = 1) begin
-        assign BUSD = data_out;
-    end else begin
-        assign BUSD = 7'b0000000;
+              output reg [7:0] BUSD);
+    always @* begin
+        if (MD == 0) begin
+            BUSD = mod_fn_unit;
+        end else if(MD == 1) begin
+            BUSD = data_out;
+        end else begin
+            BUSD = 7'b0000000;
+        end
     end
 endmodule
