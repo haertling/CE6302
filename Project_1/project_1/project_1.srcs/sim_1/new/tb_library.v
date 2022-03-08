@@ -37,17 +37,24 @@ module tb_library(
     branch_addr UUT3(PC,BUSB,BrA);
     branch_inc  UUT4(PC,PC_1);
 
-    /*mux variables */
+    /* mux variables */
     reg [7:0] PC_10, A_data, B_data, BrA0, RAA, mod_fn_unit, data_out;
     reg [5:0] constant;
     reg MA,MB;
     reg [1:0] MC, MD;
     wire [7:0] BUSA,BUSB0,PC0, BUSD;
-    
+
     muxA UUT5(PC_10,A_data,MA,BUSA);
     muxB UUT6(constant,B_data,MB,BUSB0);
     muxC UUT7(PC_10,BrA0,RAA,MC,PC0);
     muxD UUT8(mod_fn_unit,data_out,MD,BUSD);
+
+    /* constant_unit variables */
+    reg [5:0] IM;
+    reg cs;
+    wire [7:0] constant0;
+
+    constant_unit UUT9(IM, cs, constant0);
 
     initial 
     begin
@@ -92,6 +99,11 @@ module tb_library(
         #5
         MC = 2; 
         MD = 2;
+        #5
+        IM = 6'b010000;
+        cs = 1;
+        #5
+        IM = 6'b110000;
         #5
         $finish;
     end

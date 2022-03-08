@@ -23,11 +23,17 @@
 module constant_unit( input      [5:0] IM,
                       input            cs,
                       output reg [7:0] constant );
+    reg [1:0] zeroPad = 2'b00;
+    reg [1:0] onesPad = 2'b11;
     always @* begin
         if (cs == 0) begin
-            constant = 
+            constant = {zeroPad,IM};//pad front with 2 zeros
         end else begin
-            constant = IM;
+            if(IM[5]==0) begin
+                constant = {zeroPad,IM};//pad front with 2 ones if sign bit is negative
+            end else begin
+                constant = {onesPad,IM};//pad front with 2 ones if sign bit is negative
+            end
         end
     end
                    
