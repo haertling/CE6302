@@ -85,7 +85,7 @@ module muxA(  input  [7:0] PC_1,
     end
 endmodule
 
-module muxB(  input  [5:0] constant,
+module muxB(  input  [7:0] constant,
               input  [7:0] B_data,
               input        MB,
               output reg [7:0] BUSB);
