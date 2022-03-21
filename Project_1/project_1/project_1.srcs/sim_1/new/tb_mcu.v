@@ -24,24 +24,23 @@ module tb_mcu(
 
     );
     /* Clocked variables */
-    reg  [7:0]  PC2;
-    wire [7:0]  PC0, PC1, F, dataMemOut;
-    wire [16:0] IR;
-    reg         RW0;
     wire        xor_1_out, RW, MW;
     wire [1:0]  BS, MD, PS;
     wire [2:0]  DA;
     wire [3:0]  FS;
+    wire [7:0]  PC0, PC1, F, dataMemOut;
+    wire [16:0] IR;
+    reg         RW0;
     reg  [2:0]  DA0, MD0, SH;
-    reg  [7:0]  A, B;
+    reg  [7:0]  A, B, PC2;
 
     /* variables */
-    reg       Z, BS1, BS0, clk, write;
-    wire      xor_0_out, or_out, and_out, carry, zero, N, V, MA, MB, CS;
-    reg [1:0] MC;
+    wire       xor_0_out, or_out, and_out, carry, zero, N, V, MA, MB, CS;
     wire [2:0] AA, BA;
-    reg [3:0] ALU_Sel;
     wire [7:0] BUSB, BrA, A_data, BUSA, B_data, RAA, mod_fn_unit, BUSD, dm_address, constant;
+    reg        Z, BS1, BS0, clk, write;
+    reg  [1:0] MC;
+    reg  [3:0] ALU_Sel;
 
     /* gate modules */
     xor2 xor_0(.a(PS[0]), .b(Z), .c(xor_0_out));
