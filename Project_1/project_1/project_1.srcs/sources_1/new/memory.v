@@ -29,8 +29,11 @@ module program_memory( input      [7:0]  address,
     reg[16:0]mem[255:0];
     initial begin
         mem[0] = 17'b00100011001010000;//add
-        mem[1] = 17'b01000100001010000;//sub
-        mem[2] = 17'b01001101100000000;//not
+        mem[1] = 17'b10000011011000000;
+        mem[2] = 17'b01000100001010000;//sub
+        mem[3] = 17'b10000100100000000;
+        mem[4] = 17'b01001101100000000;//not
+        mem[5] = 17'b10000101101000000;
     end
     always @(address) begin
         instruction = mem[address];

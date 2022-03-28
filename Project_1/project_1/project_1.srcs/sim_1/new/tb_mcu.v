@@ -38,15 +38,15 @@ module tb_mcu(
     wire [16:0] IR;
     reg         RW0;
     reg  [2:0]  DA0, MD0, SH;
-    reg  [7:0]  A, B, PC2;
 
     /* variables */
     wire       xor_0_out, or_out, and_out, carry, zero, N, V, MA, MB, CS;
     wire [1:0] MC;
     wire [2:0] AA, BA;
-    wire [7:0] BUSA, BUSB, BUSD, BrA, A_data, B_data, constant;//RAA, mod_fn_unit, , dm_address
+    wire [7:0] BUSA, BUSB, BUSD, BrA, A_data, B_data, constant;
     reg        Z, BS1, BS0, clk, write;
     reg  [3:0] ALU_Sel;
+
 
     assign MC = {BS_reg[1],and_out};
     /* gate modules */
