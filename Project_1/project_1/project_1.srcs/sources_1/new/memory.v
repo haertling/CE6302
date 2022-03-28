@@ -27,11 +27,10 @@ module program_memory( input      [7:0]  address,
         as the address and output the corresponding 17-bit instruction from the memory.
     */
     reg[16:0]mem[255:0];
-    reg [2:0] k;
     initial begin
-        for (k = 0; k < 4; k = k + 1) begin
-            mem[k] = 3 - k;
-        end
+        mem[0] = 17'b00100011001010000;//add
+        mem[1] = 17'b01000100001010000;//sub
+        mem[2] = 17'b01001101100000000;//not
     end
     always @(address) begin
         instruction = mem[address];

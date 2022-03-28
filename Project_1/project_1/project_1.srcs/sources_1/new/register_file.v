@@ -21,7 +21,11 @@ module register_file( input            clk,
     reg[7:0] registers[7:0];
     reg[7:0] k = 0;
     initial begin
-        registers[0] = k;
+        registers[1] = 3;//a
+        registers[2] = 4;//b
+        registers[3] = 0;//add
+        registers[4] = 0;//sub
+        registers[5] = 0;//not
     end
     
     always @* begin

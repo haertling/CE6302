@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 03/19/2022 04:31:59 PM
+// Create Date: 03/21/2022 06:09:37 PM
 // Design Name: 
-// Module Name: tb_mcu
+// Module Name: mcu
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,8 +20,11 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module tb_mcu(
-    );
+module mcu( input clk,
+            input rst,
+            output reg mcu_out
+          );
+
     /* REGISTERS */ 
     reg        RW_reg, RW1_reg, PS_reg, MW_reg, xor_1_out_reg;
     reg [1:0]  MD_reg, MD1_reg, BS_reg;
@@ -81,9 +84,8 @@ module tb_mcu(
     /* memory modules */
     program_memory PM (.address(PC_reg), .instruction(IR));
     data_memory    DM (.clk(clk), .address(BUSA_reg), .write(MW_reg), .dataIn(BUSB_reg), .dataOut(dataMemOut));
-
-    initial 
-    begin
+    
+    initial begin
         PC_reg = 0;
         PC1_reg = 0;
         IR_reg = 0;
@@ -106,42 +108,34 @@ module tb_mcu(
         xor_1_out_reg = 0;
         F_reg = 0;
         dataMemOut_reg = 0;
-
-        clk = 0;
-        #200
-        $finish;
-    end
-    always @(posedge clk)
-    begin
-            PC_reg = PC0;
-
-            PC1_reg = PC1;
-            IR_reg = IR;
-
-            PC2_reg = PC1_reg;
-            BUSA_reg = BUSA;
-            BUSB_reg = BUSB;
-            RW_reg = RW;
-            PS_reg = PS;
-            MW_reg = MW;
-            DA_reg = DA;
-            SH_reg = IR[2:0];
-            MD_reg = MD;
-            BS_reg = BS;
-            FS_reg = FS;
-
-            RW1_reg = RW_reg;
-            DA1_reg = DA_reg;
-            MD1_reg = MD_reg;
-            xor_1_out_reg = xor_1_out;
-            F_reg = F;
-            dataMemOut_reg = dataMemOut;
-
     end
 
-    always 
+    always @(posedge clk) 
     begin
-        #5;
-        clk =~clk;
+        
+        PC_reg = PC0;
+
+        PC1_reg = PC1;
+        IR_reg = IR;
+
+        PC2_reg = PC1_reg;
+        BUSA_reg = BUSA;
+        BUSB_reg = BUSB;
+        RW_reg = RW;
+        PS_reg = PS;
+        MW_reg = MW;
+        DA_reg = DA;
+        SH_reg = IR[2:0];
+        MD_reg = MD;
+        BS_reg = BS;
+        FS_reg = FS;
+
+        RW1_reg = RW_reg;
+        DA1_reg = DA_reg;
+        MD1_reg = MD_reg;
+        xor_1_out_reg = xor_1_out;
+        F_reg = F;
+        dataMemOut_reg = dataMemOut;
+
     end
 endmodule
