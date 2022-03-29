@@ -37,7 +37,7 @@ module tb_mcu0(
 
     always 
     begin
-        #5;
+        #10;
         clk =~clk;
     end
 

@@ -104,13 +104,13 @@ module muxC(  input  [7:0] PC_1,
               input  [1:0] BS,
               input        PS, Z,
               output reg [7:0] PC);
-    reg [1:0] MC;
+    reg [1:0] MC = 2'b0;
     always @* begin
         MC[0] = ((PS^Z)|BS[1])&BS[0];
         MC[1] = BS[1];
-        if (MC == 0) begin
+        if (MC == 2'b00) begin
             PC = PC_1;
-        end else if(MC == 2) begin
+        end else if(MC == 2'b10) begin
             PC = RAA;
         end else begin
             PC = BrA;

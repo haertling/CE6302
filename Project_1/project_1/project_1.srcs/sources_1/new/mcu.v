@@ -26,7 +26,7 @@ module mcu( input clk,
           );
     //init
     assign mcu_out = 0;
-    reg  [7:0] PC_reg;
+    reg  [7:0] PC_reg = 0;
 
     //fetch
     reg  [7:0] PC1_reg;
@@ -36,11 +36,11 @@ module mcu( input clk,
     wire [7:0] PC0, PC1;
     wire [16:0]IR;
 
-    assign PC0 = PC_reg;
+    //assign PC0 = PC_reg;
 
     program_memory PM (.address(PC_reg), .instruction(IR));
 
-    assign PC1 = PC_reg + 8'h1;
+    assign PC1 = PC_reg + 8'b1;
 
     //decode
     reg        RW_reg, PS_reg, MW_reg;
@@ -58,10 +58,10 @@ module mcu( input clk,
     wire [7:0] PC1_d, BUSA, BUSB, A_data, B_data, constant;
     wire [16:0] IR_F;
 
-    assign PC1_d=PC1;
-    assign IR_F=IR;
-    assign IM=IR_F[5:0];
-    assign SH=IR_F[2:0];
+    assign PC1_d = PC1;
+    assign IR_F = IR;
+    assign IM = IR_F[5:0];
+    assign SH = IR_F[2:0];
 
     /* instruction_decoder modules */ 
     instruction_decoder ID(.instruction(IR_reg),.rw(RW),.ps(PS),.mw(MW),.ma(MA),.mb(MB),.cs(CS),.md(MD),.bs(BS),.da(DA),.aa(AA),.ba(BA),.fs(FS));

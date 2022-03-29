@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_mcu0_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="tb_mcu0" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="115.176 ns"></ZoomEndTime>
+      <Cursor1Time time="0.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="104"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="17" />
+   <wvobject fp_name="/tb_mcu0/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/UUT7/PC" type="array">
+      <obj_property name="ElementShortName">PC[7:0]</obj_property>
+      <obj_property name="ObjectShortName">PC[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/PC_reg" type="array">
+      <obj_property name="ElementShortName">PC_reg[7:0]</obj_property>
+      <obj_property name="ObjectShortName">PC_reg[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/UUT7/PC_1" type="array">
+      <obj_property name="ElementShortName">PC_1[7:0]</obj_property>
+      <obj_property name="ObjectShortName">PC_1[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/UUT7/BrA" type="array">
+      <obj_property name="ElementShortName">BrA[7:0]</obj_property>
+      <obj_property name="ObjectShortName">BrA[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/UUT7/RAA" type="array">
+      <obj_property name="ElementShortName">RAA[7:0]</obj_property>
+      <obj_property name="ObjectShortName">RAA[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/UUT7/BS" type="array">
+      <obj_property name="ElementShortName">BS[1:0]</obj_property>
+      <obj_property name="ObjectShortName">BS[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/UUT7/PS" type="logic">
+      <obj_property name="ElementShortName">PS</obj_property>
+      <obj_property name="ObjectShortName">PS</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/UUT7/Z" type="logic">
+      <obj_property name="ElementShortName">Z</obj_property>
+      <obj_property name="ObjectShortName">Z</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/UUT7/MC" type="array">
+      <obj_property name="ElementShortName">MC[1:0]</obj_property>
+      <obj_property name="ObjectShortName">MC[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="divider" fp_name="divider638">
+      <obj_property name="label">IF</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/PC1" type="array">
+      <obj_property name="ElementShortName">PC1[7:0]</obj_property>
+      <obj_property name="ObjectShortName">PC1[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/PC1_reg" type="array">
+      <obj_property name="ElementShortName">PC1_reg[7:0]</obj_property>
+      <obj_property name="ObjectShortName">PC1_reg[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/BUSA_reg" type="array">
+      <obj_property name="ElementShortName">BUSA_reg[7:0]</obj_property>
+      <obj_property name="ObjectShortName">BUSA_reg[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/BUSB_reg" type="array">
+      <obj_property name="ElementShortName">BUSB_reg[7:0]</obj_property>
+      <obj_property name="ObjectShortName">BUSB_reg[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/RF/registers" type="array">
+      <obj_property name="ElementShortName">registers[7:0][7:0]</obj_property>
+      <obj_property name="ObjectShortName">registers[7:0][7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/PC0" type="array">
+      <obj_property name="ElementShortName">PC0[7:0]</obj_property>
+      <obj_property name="ObjectShortName">PC0[7:0]</obj_property>
+   </wvobject>
+</wave_config>
