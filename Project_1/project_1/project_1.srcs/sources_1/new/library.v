@@ -153,6 +153,9 @@ module DHS_func(         input        MA,
                          input  [2:0] DA,
                          output       DHS_O,
                          output       DHS_I);
-    assign DHS_O = 1'b1;
-    assign DHS_I = 1'b1;
+    wire HA, HB;
+    assign HA = (DA==AA)&(~MA)&(RW)&(DA[0]||DA[1]||DA[2]);
+    assign HB = (DA==BA)&(~MB)&(RW)&(DA[0]||DA[1]||DA[2]);
+    assign DHS_O = (HA||HB);
+    assign DHS_I = ~(HA||HB);
 endmodule
