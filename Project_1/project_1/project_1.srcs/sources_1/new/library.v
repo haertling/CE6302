@@ -133,3 +133,26 @@ module muxD(  input  [7:0] mod_fn_unit,
         end
     end
 endmodule
+
+module branchDetection(  input  [1:0]  BS_In,
+                         input         RW_In,
+                         input         MW_In,
+                         input         PS_In,
+                         input  [16:0] Inst_In,
+                         output [16:0] BranchD_O,
+                         output        BS_N);
+    assign BranchD_O = 17'b00000000000000001;
+    assign BS_N = 1'b0;
+endmodule
+
+module DHS_func(         input        MA,
+                         input        MB,
+                         input        RW,
+                         input  [2:0] AA,
+                         input  [2:0] BA,
+                         input  [2:0] DA,
+                         output       DHS_O,
+                         output       DHS_I);
+    assign DHS_O = 1'b1;
+    assign DHS_I = 1'b1;
+endmodule

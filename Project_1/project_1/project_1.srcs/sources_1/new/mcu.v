@@ -24,154 +24,249 @@ module mcu( input clk,
             input rst,
             output mcu_out
           );
-    //init
-    assign mcu_out = 0;
-    reg  [7:0] PC_reg = 0;
+    // Initial Stage
+	// Register
+	reg [7:0] PC_Reg;
+	// Wire
+	wire [7:0] MuxC_Out;
+	// Instruction Fetch stage
+	// Wire
+	wire [7:0] Pc_Fetch, Pc_pc1_Fetch;
+	wire [16:0] Inst_Fetch;
+	wire [16:0] Branch_Fetch;
+	// Register
+	reg [7:0]  Pc1_IF_Reg;
+	reg [16:0] IR_IF_Reg;
 
-    //fetch
-    reg  [7:0] PC1_reg;
-    reg [16:0] IR_reg;
+	// Assign PC_Fetch
+	assign Pc_Fetch = PC_Reg;
+	// PC_P1_Fetch Update
+	assign Pc_pc1_Fetch = PC_Reg + 8'h1;  
 
-    //wire
-    wire [7:0] PC0, PC1;
-    wire [16:0]IR;
+	// Performing ProgramMem Fetch
+	program_memory PM (.address(Pc_Fetch),.instruction(Inst_Fetch));
 
-    //assign PC0 = PC_reg;
+	// Decoder Stage
+	// WIRES
+	wire [2:0] AA_Decode,BA_Decode, DA_Decode, SH_Decode;
+	wire [7:0] A_Data_Decode,B_Data_Decode,PC1_Decode;
+	wire RW_Decode,PS_Decode,MW_Decode, MA_Decode, MB_Decode,CS_Decode,BS_Invert_wire;
+	wire [1:0] MD_Decode, BS_Decode;
+	wire [3:0] FS_Decode;
+	wire [7:0] busA_Decode, busB_Decode, constant_output_Decode;
+	wire [5:0] IM_Decode;
+	wire [16:0] IR_Decode;
 
-    program_memory PM (.address(PC_reg), .instruction(IR));
 
-    assign PC1 = PC_reg + 8'b1;
+	// Register 
+	reg [7:0] PC2_Decode_Reg, busA_Decode_Reg,busB_Decode_Reg;
+	reg RW_Decode_Reg,PS_Decode_Reg,MW_Decode_Reg;
+	reg [2:0] DA_Decode_Reg,SH_Decode_Reg;
+	reg [1:0] MD_Decode_Reg, BS_Decode_Reg;
+	reg [3 :0] FS_Decode_Reg;
 
-    //decode
-    reg        RW_reg, PS_reg, MW_reg;
-    reg [1:0]  MD_reg, BS_reg;
-    reg [2:0]  DA_reg, SH_reg;
-    reg [3:0]  FS_reg;
-    reg [7:0]  PC2_reg, BUSA_reg, BUSB_reg;
+	// Assignment of Wires
+	assign PC1_Decode = Pc1_IF_Reg;
+	assign IR_Decode = IR_IF_Reg;
+	assign IM_Decode = IR_IF_Reg[5:0];
+	assign SH_Decode = IR_IF_Reg[2:0];
+	//assign FS_Decode = FS_Decode_Reg;
 
-    //wires
-    wire       RW, PS, MW, MA, MB, CS;
-    wire [1:0] MD, BS;
-    wire [2:0] DA, SH, AA, BA;
-    wire [3:0] FS;
-    wire [5:0] IM;
-    wire [7:0] PC1_d, BUSA, BUSB, A_data, B_data, constant;
-    wire [16:0] IR_F;
+	//Call Functions
+	//Instruction Decoder
+	instruction_decoder ID(.instruction(IR_Decode),.rw(RW_Decode),.ps(PS_Decode),.mw(MW_Decode),.ma(MA_Decode),.mb(MB_Decode),.cs(CS_Decode),.md(MD_Decode),.bs(BS_Decode),.da(DA_Decode),.aa(AA_Decode),.ba(BA_Decode),.fs(FS_Decode));
+			
+	// Constant Unit Call
+	constant_unit CU(.IM(IM_Decode),.cs(CS_Decode),.constant(constant_output_Decode));
+	
+	//Branch Detection Call
+	branchDetection BD(.BS_In(BS_Decode),.RW_In(RW_Decode),.MW_In(MW_Decode),.PS_In(PS_Decode),.Inst_In(Inst_Fetch),.BranchD_O(Branch_Fetch),.BS_N(BS_Invert_wire));   
 
-    assign PC1_d = PC1;
-    assign IR_F = IR;
-    assign IM = IR_F[5:0];
-    assign SH = IR_F[2:0];
+    // Execution Stage
+	// WIRES
+	wire RW_Execution,PS_Execution, MW_Execution;
+	wire [2:0] DA_Execution,SH_Execution; 
+	wire [1:0] MD_Execution,BS_Execution;
+	wire [3:0] FS_Execution; 
+	wire [7:0] PC2_Execution;
+	wire [7:0] BrA_Execution; 
+	wire [7:0] BusB_Execution,RAA_Execution;
+	wire [7:0] ALU_FS_Execution,Datamem_Execution;
+	wire Zero_Execution,Carry_Execution,Neg_Execution,Overflow_Execution;
+	wire DHS_Out, DHS_Not_W;
 
-    /* instruction_decoder modules */ 
-    instruction_decoder ID(.instruction(IR_reg),.rw(RW),.ps(PS),.mw(MW),.ma(MA),.mb(MB),.cs(CS),.md(MD),.bs(BS),.da(DA),.aa(AA),.ba(BA),.fs(FS));
-    constant_unit CU(.IM(IM), .cs(CS), .constant(constant));
-    muxA UUT5(.PC_1(PC1_reg), .A_data(A_data), .MA(MA), .BUSA(BUSA));
-    muxB UUT6(.constant(constant), .B_data(B_data), .MB(MB), .BUSB(BUSB));
+	// REGISTER
+	reg RW_Execution_Reg;
+	reg [2:0] DA_Execution_Reg;
+	reg [1:0] MD_Execution_Reg;
+	reg [7:0] ALU_Execution_Reg, Datamem_Execution_Reg;
 
-    //execute
-    reg       RW1_reg;
-    reg [1:0] MD1_reg;
-    reg [2:0] DA1_reg;
-    reg [7:0] F_reg, dataMemOut_reg;
+	//Assignment of Wires
+	assign RW_Execution = RW_Decode_Reg; 
+	assign PS_Execution = PS_Decode_Reg;
+	assign MW_Execution = MW_Decode_Reg;
+	assign DA_Execution = DA_Decode_Reg; 
+	assign SH_Execution = SH_Decode_Reg;
+	assign MD_Execution = MD_Decode_Reg;
+	assign BS_Execution = BS_Decode_Reg;
+	assign FS_Execution = FS_Decode_Reg;
+	assign PC2_Execution = PC2_Decode_Reg; 
+	assign BusB_Execution = busB_Decode_Reg;
+	assign RAA_Execution = busA_Decode_Reg;
 
-    //wires
-    wire       RW1, PS1, MW1, zero, N, carry, V;
-    wire [1:0] MD1, BS1;
-    wire [2:0] DA1, SH1;
-    wire [3:0] FS1;
-    wire [7:0] BrA, PC2, RAA, BUSB1, F, dataMemOut;
+	// Adder Call
+	branch_addr addr(.PC(PC2_Execution),.BUSB(BusB_Execution),.BrA(BrA_Execution));
 
-    assign PC2   = PC2_reg;
-    assign RW1   = RW;
-    assign DA1   = DA;
-    assign MD1   = MD;
-    assign BS1   = BS;
-    assign PS1   = PS;
-    assign MW1   = MW;
-    assign FS1   = FS;
-    assign SH1   = SH;
-    assign RAA   = BUSA;
-    assign BUSB1 = BUSB;
+	// ALU Call
+	h_alu alu(.ALU_Sel(FS_Execution),.SH(SH_Execution),.X(RAA_Execution),.Y(BusB_Execution),.Z(ALU_FS_Execution),.zero_flag(Zero_Execution),.neg_flag(Neg_Execution),.c_flag(Carry_Execution),.over_flag(Overflow_Execution));
 
-    branch_addr UUT3(.PC(PC2), .BUSB(BUSB1), .BrA(BrA));
-    /* ALU modules */    
-    h_alu test_unit( .X(BUSA_reg), .Y(BUSB_reg),      // ALU 8-bit Inputs                 
-                     .ALU_Sel(FS1), // ALU Selection
-                     .SH(SH1),           // shift amount
-                     .Z(F),             // ALU 8-bit Output
-                     .c_flag(carry),    // Carry Out Flag
-                     .zero_flag(zero),
-                     .neg_flag(N),
-                     .over_flag(V)      
-                    );
-    data_memory    DM (.clk(clk), .address(RAA), .write(MW1), .dataIn(BUSB1), .dataOut(dataMemOut));
-    muxC UUT7(.PC_1(PC1), .BrA(BrA), .RAA(RAA), .BS(BS1), .PS(PS1), .Z(zero), .PC(PC0));
+	// Data Memory Call
+	data_memory DM(.clk(clk),.address(RAA_Execution),.write(MW_Execution),.dataIn(BusB_Execution),.dataOut(Datamem_Execution));
 
-    //Writeback 
-    wire RW2;
-    wire [1:0] MD2;
-    wire [2:0] DA2;
-    wire [7:0] BUSD, F1, dataMemOut1;
 
-    assign F1 = F;
-    assign dataMemOut1 = dataMemOut_reg;
-    assign RW2 = RW1;
-    assign MD2 = MD1;
-    assign DA2 = DA1;
+	// DHS Call
+	DHS_func DHS(.MA(MA_Decode),.MB(MB_Decode),.RW(RW_Execution),.AA(AA_Decode),.BA(BA_Decode),.DA(DA_Execution),.DHS_O(DHS_Out),.DHS_I(DHS_Not_W));
 
-    muxD UUT8(.mod_fn_unit(F1), .data_out(dataMemOut1), .flag(1'b0), .MD(MD2), .BUSD(BUSD));
-    register_file RF (.clk(clk), .a_address(AA), .b_address(BA), .d_address(DA2), .dataIn(BUSD), .write(RW2), .a_data(A_data), .b_data(B_data));
+    // Last stage -- Write Back //
 
-    initial begin
-        PC_reg = 0;
-        PC1_reg = 0;
-        IR_reg = 0;
+	///WIRES
+	wire [7:0] alu_wb,busD_wb,datamem_wb;
+	wire rw_wb;
+	wire [2:0] da_wb;
+	wire [1:0] md_wb;
 
-        BUSA_reg = 0;
-        BUSB_reg = 0;
-        RW_reg = 0;
-        PS_reg = 0;
-        MW_reg = 0;
-        DA_reg = 0;
-        SH_reg = 0;
-        MD_reg = 0;
-        BS_reg = 0;
-        FS_reg = 0;
+	//Assignment
+	assign alu_wb = ALU_Execution_Reg;
+	assign da_wb = DA_Execution_Reg;
+	assign rw_wb = RW_Execution_Reg;
+	assign datamem_wb = Datamem_Execution_Reg;
+	assign md_wb = MD_Execution_Reg;
+	// Register file call
+	register_file RF(.clk(clk),.a_address(AA_Decode),.b_address(BA_Decode),.d_address(da_wb),.dataIn(busD_wb),.write(rw_wb),.a_data(A_Data_Decode),.b_data(B_Data_Decode));
+	// MUX D Call
+	muxD muxD_call(.mod_fn_unit(alu_wb),.data_out(datamem_wb),.flag(1'b0),.MD(md_wb),.BUSD(busD_wb));
+	// Initilization of Registers
+	initial 
+	begin
+		PC_Reg = 0;
+		Pc1_IF_Reg = 0;
+		IR_IF_Reg = 0;
 
-        RW1_reg = 0;
-        PC2_reg = 0;
-        DA1_reg = 0;
-        MD1_reg = 0;
-        F_reg = 0;
-        dataMemOut_reg = 0;
-    end
+		// Decoder stage
 
-    always @(posedge clk) 
-    begin
-        if( BS == 2'b00 ) begin
-            PC_reg = PC0;
+		PC2_Decode_Reg = 0;
+		busA_Decode_Reg = 0;
+		busB_Decode_Reg = 0;
+		RW_Decode_Reg = 0;
+		PS_Decode_Reg = 0;
+		MW_Decode_Reg = 0;
+		DA_Decode_Reg = 0;
+		SH_Decode_Reg = 0;
+		MD_Decode_Reg = 0;
+		BS_Decode_Reg = 0;
+		FS_Decode_Reg = 0;
 
-            PC1_reg = PC1;
-            IR_reg = IR;
+		// Execution stage
+		RW_Execution_Reg = 0;
+		DA_Execution_Reg = 0;
+		MD_Execution_Reg = 0;
+		ALU_Execution_Reg = 0;
+		Datamem_Execution_Reg = 0;
+	end
 
-            PC2_reg = PC1_d;
-            BUSA_reg = BUSA;
-            BUSB_reg = BUSB;
-            RW_reg = RW;
-            PS_reg = PS;
-            MW_reg = MW;
-            DA_reg = DA;
-            SH_reg = SH;
-            MD_reg = MD;
-            BS_reg = BS;
-            FS_reg = FS;
+	// Register Assignment
+	always @(posedge clk)
+	begin
+		if((DHS_Out == 0) && (!(BS_Decode[0] || BS_Decode[1])))
+		begin
 
-            RW1_reg = RW1;
-            DA1_reg = DA1;
-            MD1_reg = MD1;
-            F_reg = F;
-            dataMemOut_reg = dataMemOut;
-        end
-    end
+			PC_Reg = MuxC_Out;
+
+			// Instruction fetch
+			Pc1_IF_Reg = Pc_pc1_Fetch;
+			IR_IF_Reg = Inst_Fetch;
+
+			// Decode stage
+			PC2_Decode_Reg = PC1_Decode;
+			busA_Decode_Reg = busA_Decode;
+			busB_Decode_Reg = busB_Decode;
+			RW_Decode_Reg = RW_Decode;
+			PS_Decode_Reg = PS_Decode;
+			MW_Decode_Reg = MW_Decode;
+			DA_Decode_Reg = DA_Decode;
+			SH_Decode_Reg = SH_Decode;
+			MD_Decode_Reg = MD_Decode;
+			BS_Decode_Reg = BS_Decode;
+			FS_Decode_Reg = FS_Decode;
+
+			// Execution stage
+			RW_Execution_Reg = RW_Execution;
+			DA_Execution_Reg = DA_Execution;
+			MD_Execution_Reg = MD_Execution;
+			ALU_Execution_Reg = ALU_FS_Execution;
+			Datamem_Execution_Reg = Datamem_Execution;
+	
+		end
+
+		else if((DHS_Out == 1) && (!(BS_Decode[0] || BS_Decode[1]))) // DHS
+		begin
+
+			PC_Reg   = PC_Reg;
+			
+			// Instruction Fetch
+			Pc1_IF_Reg = Pc1_IF_Reg;
+			IR_IF_Reg = IR_IF_Reg;
+			
+			// Decode stage
+			PC2_Decode_Reg = PC2_Decode_Reg;
+			busA_Decode_Reg = busA_Decode;
+			busB_Decode_Reg = busB_Decode;
+			RW_Decode_Reg = RW_Decode && DHS_Not_W;
+			DA_Decode_Reg = DA_Decode && DHS_Not_W;
+			MD_Decode_Reg = MD_Decode;
+			BS_Decode_Reg = BS_Decode && DHS_Not_W;
+			PS_Decode_Reg = PS_Decode;
+			MW_Decode_Reg = MW_Decode && DHS_Not_W;
+			FS_Decode_Reg = FS_Decode;
+			SH_Decode_Reg = SH_Decode;
+			
+			// Execution Stage
+			RW_Execution_Reg = RW_Execution;
+			DA_Execution_Reg = DA_Execution;
+			MD_Execution_Reg = MD_Execution;
+			ALU_Execution_Reg = ALU_FS_Execution;
+			Datamem_Execution_Reg = Datamem_Execution;
+		end 
+
+		else if ((DHS_Out == 0) && (BS_Decode[0] || BS_Decode[1])) // branch
+		begin
+
+			PC_Reg = MuxC_Out;
+
+			// Instruction fetch
+			Pc1_IF_Reg = Pc_pc1_Fetch;
+			IR_IF_Reg = Branch_Fetch;
+
+			// Decode stage
+			PC2_Decode_Reg = PC1_Decode;
+			busA_Decode_Reg = busA_Decode;
+			busB_Decode_Reg = busB_Decode;
+			RW_Decode_Reg = RW_Decode && BS_Invert_wire;
+			DA_Decode_Reg = DA_Decode;
+			MD_Decode_Reg = MD_Decode;
+			BS_Decode_Reg = BS_Decode && BS_Invert_wire;
+			PS_Decode_Reg = PS_Decode;
+			MW_Decode_Reg = MW_Decode && BS_Invert_wire;
+			FS_Decode_Reg = FS_Decode;
+			SH_Decode_Reg = SH_Decode;
+
+			// Execution Stage
+			RW_Execution_Reg = RW_Execution;
+			DA_Execution_Reg = DA_Execution;
+			MD_Execution_Reg = MD_Execution;
+			ALU_Execution_Reg = ALU_FS_Execution;
+			Datamem_Execution_Reg = Datamem_Execution;
+
+		end
+	end
 endmodule
