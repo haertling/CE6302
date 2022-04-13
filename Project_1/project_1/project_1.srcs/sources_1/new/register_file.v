@@ -27,6 +27,8 @@ module register_file( input            clk,
         registers[3] = 0;//add
         registers[4] = 0;//sub
         registers[5] = 0;//not
+        registers[6] = 0;
+        registers[7] = 0;
     end
     
     always @* begin

@@ -12,80 +12,84 @@
    </db_ref_list>
    <zoom_setting>
       <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="115.176 ns"></ZoomEndTime>
-      <Cursor1Time time="0.000 ns"></Cursor1Time>
+      <ZoomEndTime time="200.001 ns"></ZoomEndTime>
+      <Cursor1Time time="200.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="104"></NameColumnWidth>
-      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+      <NameColumnWidth column_width="202"></NameColumnWidth>
+      <ValueColumnWidth column_width="73"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="17" />
-   <wvobject fp_name="/tb_mcu0/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/UUT7/PC" type="array">
-      <obj_property name="ElementShortName">PC[7:0]</obj_property>
-      <obj_property name="ObjectShortName">PC[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/PC_reg" type="array">
-      <obj_property name="ElementShortName">PC_reg[7:0]</obj_property>
-      <obj_property name="ObjectShortName">PC_reg[7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/UUT7/PC_1" type="array">
+   <WVObjectSize size="18" />
+   <wvobject fp_name="/tb_mcu0/top/MUXC_Call/PC_1" type="array">
       <obj_property name="ElementShortName">PC_1[7:0]</obj_property>
       <obj_property name="ObjectShortName">PC_1[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/UUT7/BrA" type="array">
+   <wvobject fp_name="/tb_mcu0/top/MUXC_Call/BrA" type="array">
       <obj_property name="ElementShortName">BrA[7:0]</obj_property>
       <obj_property name="ObjectShortName">BrA[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/UUT7/RAA" type="array">
+   <wvobject fp_name="/tb_mcu0/top/MUXC_Call/RAA" type="array">
       <obj_property name="ElementShortName">RAA[7:0]</obj_property>
       <obj_property name="ObjectShortName">RAA[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/UUT7/BS" type="array">
+   <wvobject fp_name="/tb_mcu0/top/MUXC_Call/BS" type="array">
       <obj_property name="ElementShortName">BS[1:0]</obj_property>
       <obj_property name="ObjectShortName">BS[1:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/UUT7/PS" type="logic">
+   <wvobject fp_name="/tb_mcu0/top/MUXC_Call/PS" type="logic">
       <obj_property name="ElementShortName">PS</obj_property>
       <obj_property name="ObjectShortName">PS</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/UUT7/Z" type="logic">
+   <wvobject fp_name="/tb_mcu0/top/MUXC_Call/Z" type="logic">
       <obj_property name="ElementShortName">Z</obj_property>
       <obj_property name="ObjectShortName">Z</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/UUT7/MC" type="array">
+   <wvobject fp_name="/tb_mcu0/top/MUXC_Call/PC" type="array">
+      <obj_property name="ElementShortName">PC[7:0]</obj_property>
+      <obj_property name="ObjectShortName">PC[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/MUXC_Call/MC" type="array">
       <obj_property name="ElementShortName">MC[1:0]</obj_property>
       <obj_property name="ObjectShortName">MC[1:0]</obj_property>
    </wvobject>
-   <wvobject type="divider" fp_name="divider638">
-      <obj_property name="label">IF</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
+   <wvobject fp_name="/tb_mcu0/top/alu/X" type="array">
+      <obj_property name="ElementShortName">X[7:0]</obj_property>
+      <obj_property name="ObjectShortName">X[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/PC1" type="array">
-      <obj_property name="ElementShortName">PC1[7:0]</obj_property>
-      <obj_property name="ObjectShortName">PC1[7:0]</obj_property>
+   <wvobject fp_name="/tb_mcu0/top/alu/Y" type="array">
+      <obj_property name="ElementShortName">Y[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Y[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/PC1_reg" type="array">
-      <obj_property name="ElementShortName">PC1_reg[7:0]</obj_property>
-      <obj_property name="ObjectShortName">PC1_reg[7:0]</obj_property>
+   <wvobject fp_name="/tb_mcu0/top/alu/ALU_Sel" type="array">
+      <obj_property name="ElementShortName">ALU_Sel[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ALU_Sel[3:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/BUSA_reg" type="array">
-      <obj_property name="ElementShortName">BUSA_reg[7:0]</obj_property>
-      <obj_property name="ObjectShortName">BUSA_reg[7:0]</obj_property>
+   <wvobject fp_name="/tb_mcu0/top/alu/SH" type="array">
+      <obj_property name="ElementShortName">SH[2:0]</obj_property>
+      <obj_property name="ObjectShortName">SH[2:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/BUSB_reg" type="array">
-      <obj_property name="ElementShortName">BUSB_reg[7:0]</obj_property>
-      <obj_property name="ObjectShortName">BUSB_reg[7:0]</obj_property>
+   <wvobject fp_name="/tb_mcu0/top/alu/Z" type="array">
+      <obj_property name="ElementShortName">Z[7:0]</obj_property>
+      <obj_property name="ObjectShortName">Z[7:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/RF/registers" type="array">
-      <obj_property name="ElementShortName">registers[7:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">registers[7:0][7:0]</obj_property>
+   <wvobject fp_name="/tb_mcu0/top/alu/c_flag" type="logic">
+      <obj_property name="ElementShortName">c_flag</obj_property>
+      <obj_property name="ObjectShortName">c_flag</obj_property>
    </wvobject>
-   <wvobject fp_name="/tb_mcu0/top/PC0" type="array">
-      <obj_property name="ElementShortName">PC0[7:0]</obj_property>
-      <obj_property name="ObjectShortName">PC0[7:0]</obj_property>
+   <wvobject fp_name="/tb_mcu0/top/alu/zero_flag" type="logic">
+      <obj_property name="ElementShortName">zero_flag</obj_property>
+      <obj_property name="ObjectShortName">zero_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/alu/neg_flag" type="logic">
+      <obj_property name="ElementShortName">neg_flag</obj_property>
+      <obj_property name="ObjectShortName">neg_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/alu/over_flag" type="logic">
+      <obj_property name="ElementShortName">over_flag</obj_property>
+      <obj_property name="ObjectShortName">over_flag</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_mcu0/top/alu/ALU_Result" type="array">
+      <obj_property name="ElementShortName">ALU_Result[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ALU_Result[7:0]</obj_property>
    </wvobject>
 </wave_config>

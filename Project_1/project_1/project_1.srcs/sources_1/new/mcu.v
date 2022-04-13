@@ -114,6 +114,9 @@ module mcu( input clk,
 	assign BusB_Execution = busB_Decode_Reg;
 	assign RAA_Execution = busA_Decode_Reg;
 
+	// MUXC
+	muxC MUXC_Call (.PC_1(Pc_pc1_Fetch),.BrA(BrA_Execution),.RAA(RAA_Execution),.BS(BS_Decode),.PS(PS_Decode),.Z(Zero_Execution),.PC(MuxC_Out));
+	
 	// Adder Call
 	branch_addr addr(.PC(PC2_Execution),.BUSB(BusB_Execution),.BrA(BrA_Execution));
 
@@ -145,6 +148,11 @@ module mcu( input clk,
 	register_file RF(.clk(clk),.a_address(AA_Decode),.b_address(BA_Decode),.d_address(da_wb),.dataIn(busD_wb),.write(rw_wb),.a_data(A_Data_Decode),.b_data(B_Data_Decode));
 	// MUX D Call
 	muxD muxD_call(.mod_fn_unit(alu_wb),.data_out(datamem_wb),.flag(1'b0),.MD(md_wb),.BUSD(busD_wb));
+	
+	// MUX A,
+	muxA MUXA_Call(  .PC_1(PC1_Decode),.A_data(A_Data_Decode),.MA(MA_Decode),.BUSA(busA_Decode));
+	// MUX B
+	muxB MUXB_Call( .constant(constant_output_Decode),.B_data(B_Data_Decode),.MB(MB_Decode),.BUSB(busB_Decode));
 	// Initilization of Registers
 	initial 
 	begin
@@ -211,7 +219,7 @@ module mcu( input clk,
 		else if((DHS_Out == 1) && (!(BS_Decode[0] || BS_Decode[1]))) // DHS
 		begin
 
-			PC_Reg   = PC_Reg;
+			PC_Reg   = MuxC_Out;
 			
 			// Instruction Fetch
 			Pc1_IF_Reg = Pc1_IF_Reg;

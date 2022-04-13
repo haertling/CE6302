@@ -42,7 +42,7 @@ module h_alu( input      [7:0] X,Y,    // ALU 8-bit Inputs
         4'b0001: // Subtraction
           ALU_Result = X - Y ;
         4'b0010: // Multiplication
-          ALU_Result = X * Y;
+          ALU_Result =!X;
         4'b0011: // Division
           ALU_Result = X/Y;
         4'b0100: // Logical shift left
