@@ -120,6 +120,7 @@ endmodule
 
 module muxD(  input  [7:0] mod_fn_unit,
               input  [7:0] data_out,
+              input  [7:0] storeVal,
               input        flag,
               input  [1:0] MD,
               output reg [7:0] BUSD);
@@ -128,8 +129,10 @@ module muxD(  input  [7:0] mod_fn_unit,
             BUSD = mod_fn_unit;
         end else if(MD == 1) begin
             BUSD = data_out;
-        end else begin
+        end else if(MD == 2) begin
             BUSD = {7'b0,flag};
+        end else begin
+            BUSD = storeVal;
         end
     end
 endmodule

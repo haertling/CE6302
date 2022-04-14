@@ -19,14 +19,14 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module mcu_io(
-	 input clk,  // Clock
-	 input reset,// Reset signal
-	 input output_write_enable, // Write enable
-	 input [7:0] output_data_in, // Data in
+	 input clk,                       // Clock
+	 input reset,                     // Reset signal
+	 input output_write_enable,       // Write enable
+	 input [7:0] output_data_in,      // Data in
 	 input [7:0] output_data_address, // Data address
 	 output reg [7:0] input_data_out, // Data output
-	 input [8:0] fpga_in, // Connection to FPGA input pins
-	 output [9:0] fpga_out // Connection to FPGA output pins
+	 input [8:0] fpga_in,             // Connection to FPGA input pins
+	 output [9:0] fpga_out            // Connection to FPGA output pins
     );
 	 // Output
 	vga_out VGA_OUT(.clk(clk),
@@ -40,23 +40,13 @@ module mcu_io(
 			  .Vsync(fpga_out[0])
     );
 	 
-//	 wire [7:0] sw;
-//	 assign sw = fpga_in[7:0];
-//	 
-//	 always @(negedge clk)
-//		if (!reset)
-//			input_data_out <= 0;
-//		else
-//			input_data_out <= sw;
-	 
 	 // input
 	 always @(fpga_in[8])
 	 begin
 		if (!reset)
 			input_data_out <= 8'd0;
 		else
-			//if (!fpga_in[8])
-				input_data_out <= fpga_in[7:0];
+			input_data_out <= fpga_in[7:0];
 	 end
 
 endmodule
