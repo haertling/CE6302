@@ -145,7 +145,7 @@ module branchDetection(  input  [1:0]  BS_In,
                          output [16:0] BranchD_O,
                          output        BS_N);
     assign BranchD_O = 17'b00000000000000000;//nop
-    assign BS_N = ~((BS_In[0]&(BS_In[1]||PS_In))||BS_In[1]);
+    assign BS_N = ~(BS_In[0]||BS_In[1]);
 endmodule
 
 module DHS_func(         input        MA,

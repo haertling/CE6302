@@ -41,9 +41,25 @@ module tb_mcu0(
         $finish;   
     end
 
+    always
+    begin
+        fpga_in = 9'b000000000;
+        #10
+        fpga_in = 9'b111111010;
+        #10
+        fpga_in = 9'b101111101;
+        #10
+        fpga_in = 9'b100000101;
+        #10
+        fpga_in = 9'b111111101;
+        #10
+        fpga_in = 9'b101010000;
+        #10;
+    end
+    
     always 
     begin
-        #10;
+        #1;
         clk =~clk;
     end
 

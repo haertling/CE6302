@@ -336,7 +336,7 @@ module instruction_decoder( input [16:0] instruction,
             da = instruction[11:9];
             aa = instruction[8:6];
             ba = 3'b0;
-            fs = 4'b0110;            
+            fs = 4'b0100;            
         end
         5'b10100: begin //jmp
             rw = 0;

@@ -22,13 +22,13 @@ module register_file( input            clk,
     reg[7:0] k = 0;
     initial begin
         registers[0] = 0;//0
-        registers[1] = 0;//a
-        registers[2] = 0;//b
-        registers[3] = 0;//add
-        registers[4] = 0;//sub
-        registers[5] = 0;//not
-        registers[6] = 0;
-        registers[7] = 0;
+        // registers[1] = 0;//a
+        // registers[2] = 0;//b
+        // registers[3] = 0;//add
+        // registers[4] = 0;//sub
+        // registers[5] = 0;//not
+        // registers[6] = 0;
+        // registers[7] = 0;
     end
     
     always @* begin
@@ -36,7 +36,7 @@ module register_file( input            clk,
         b_data = registers[b_address];
     end
     
-    always @(posedge clk ) begin
+    always @(negedge clk ) begin
         if(write)begin
             if(d_address!= 0)
                 registers[d_address] = dataIn;

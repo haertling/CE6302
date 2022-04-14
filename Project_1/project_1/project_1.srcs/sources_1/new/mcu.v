@@ -30,7 +30,7 @@ module mcu( input        clk,
 	reg [7:0] PC_Reg;
 	// Wire
 	wire [7:0] MuxC_Out;
-	
+
 	// Instruction Fetch stage
 	// Wire
 	wire [7:0] Pc_Fetch, Pc_pc1_Fetch;
@@ -119,7 +119,7 @@ module mcu( input        clk,
 	assign B_IO_Execution   = B_IO_Decode_Reg;
 
 	// MUXC
-	muxC MUXC_Call (.PC_1(Pc_pc1_Fetch),.BrA(BrA_Execution),.RAA(RAA_Execution),.BS(BS_Decode),.PS(PS_Decode),.Z(Zero_Execution),.PC(MuxC_Out));
+	muxC MUXC_Call (.PC_1(Pc_pc1_Fetch),.BrA(BrA_Execution),.RAA(RAA_Execution),.BS(BS_Execution),.PS(PS_Execution),.Z(Zero_Execution),.PC(MuxC_Out));
 	
 	// Adder Call
 	branch_addr addr(.PC(PC2_Execution),.BUSB(BusB_Execution),.BrA(BrA_Execution));
@@ -172,8 +172,8 @@ module mcu( input        clk,
 		PC2_Decode_Reg    = 0;
 		busA_Decode_Reg   = 0;
 		busB_Decode_Reg   = 0;
-		A_IO_Decode_Reg          = 0;
-		B_IO_Decode_Reg          = 0;
+		A_IO_Decode_Reg   = 0;
+		B_IO_Decode_Reg   = 0;
 		RW_Decode_Reg     = 0;
 		RW_OUT_Decode_Reg = 0;
 		PS_Decode_Reg     = 0;
@@ -237,7 +237,7 @@ module mcu( input        clk,
 		else if((DHS_Out == 1) && (!(BS_Decode[0] || BS_Decode[1]))) // DHS
 		begin
 
-			PC_Reg = MuxC_Out;
+			// PC_Reg = MuxC_Out;
 			
 			// Instruction Fetch
 			Pc1_IF_Reg = Pc1_IF_Reg;
@@ -252,10 +252,10 @@ module mcu( input        clk,
 				B_IO_Decode_Reg      = busB_Decode;
 			end
 			RW_Decode_Reg     = RW_Decode && DHS_Not_W;
-			RW_OUT_Decode_Reg = RW_OUT_Decode && DHS_Not_W;
-			DA_Decode_Reg     = DA_Decode && DHS_Not_W;
+			RW_OUT_Decode_Reg = RW_OUT_Decode;
+			DA_Decode_Reg     = DA_Decode && {2{DHS_Not_W}};
 			MD_Decode_Reg     = MD_Decode;
-			BS_Decode_Reg     = BS_Decode && DHS_Not_W;
+			BS_Decode_Reg     = BS_Decode && {2{DHS_Not_W}};
 			PS_Decode_Reg     = PS_Decode;
 			MW_Decode_Reg     = MW_Decode && DHS_Not_W;
 			FS_Decode_Reg     = FS_Decode;
@@ -291,7 +291,7 @@ module mcu( input        clk,
 			RW_OUT_Decode_Reg = RW_OUT_Decode && BS_Invert_wire;
 			DA_Decode_Reg     = DA_Decode;
 			MD_Decode_Reg     = MD_Decode;
-			BS_Decode_Reg     = BS_Decode && BS_Invert_wire;
+			BS_Decode_Reg     = BS_Decode;
 			PS_Decode_Reg     = PS_Decode;
 			MW_Decode_Reg     = MW_Decode && BS_Invert_wire;
 			FS_Decode_Reg     = FS_Decode;
