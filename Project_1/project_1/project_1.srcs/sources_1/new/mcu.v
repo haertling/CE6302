@@ -30,6 +30,7 @@ module mcu( input        clk,
 	reg [7:0] PC_Reg;
 	// Wire
 	wire [7:0] MuxC_Out;
+	
 	// Instruction Fetch stage
 	// Wire
 	wire [7:0] Pc_Fetch, Pc_pc1_Fetch;
@@ -71,16 +72,15 @@ module mcu( input        clk,
 	assign IR_Decode = IR_IF_Reg;
 	assign IM_Decode = IR_IF_Reg[5:0];
 	assign SH_Decode = IR_IF_Reg[2:0];
-	//assign FS_Decode = FS_Decode_Reg;
 
-	//Call Functions
-	//Instruction Decoder
+	// Call Functions
+	// Instruction Decoder
 	instruction_decoder ID(.instruction(IR_Decode),.rw(RW_Decode),.rw_out(RW_OUT_Decode),.ps(PS_Decode),.mw(MW_Decode),.ma(MA_Decode),.mb(MB_Decode),.cs(CS_Decode),.md(MD_Decode),.bs(BS_Decode),.da(DA_Decode),.aa(AA_Decode),.ba(BA_Decode),.fs(FS_Decode));
 			
 	// Constant Unit Call
 	constant_unit CU(.IM(IM_Decode),.cs(CS_Decode),.constant(constant_output_Decode));
 	
-	//Branch Detection Call
+	// Branch Detection Call
 	branchDetection BD(.BS_In(BS_Decode),.RW_In(RW_Decode),.MW_In(MW_Decode),.PS_In(PS_Decode),.Inst_In(Inst_Fetch),.BranchD_O(Branch_Fetch),.BS_N(BS_Invert_wire));   
 
     // Execution Stage
@@ -159,6 +159,7 @@ module mcu( input        clk,
 	muxA MUXA_Call(  .PC_1(PC1_Decode),.A_data(A_Data_Decode),.MA(MA_Decode),.BUSA(busA_Decode));
 	// MUX B
 	muxB MUXB_Call( .constant(constant_output_Decode),.B_data(B_Data_Decode),.MB(MB_Decode),.BUSB(busB_Decode));
+
 	// Initilization of Registers
 	initial 
 	begin

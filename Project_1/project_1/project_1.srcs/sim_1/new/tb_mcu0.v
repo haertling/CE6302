@@ -37,9 +37,7 @@ module tb_mcu0(
         reset = 1;
         #200
         fpga_in = 9'b111111111;
-        #500
-        fpga_in = 9'b000000000;
-        #500
+        #1000
         $finish;   
     end
 
